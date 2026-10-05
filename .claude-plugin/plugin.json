@@ -1,0 +1,9 @@
+{
+  "name": "open-in-vscode",
+  "version": "0.1.0",
+  "description": "Clicking a file reference in a desktop reply opens it in VS Code at the line (Remote-SSH or local).",
+  "author": {
+    "name": "gggg5151"
+  },
+  "license": "MIT"
+}

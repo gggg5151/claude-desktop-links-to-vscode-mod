@@ -1,0 +1,14 @@
+{
+  "name": "claude-open-bridge",
+  "displayName": "Claude Open Bridge",
+  "publisher": "gggg5151",
+  "version": "0.3.2",
+  "license": "MIT",
+  "description": "Lets the open-in-vscode Claude Code mod show a file at a line in this window, including Markdown files that open in the built-in Markdown Preview.",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "extensionKind": ["workspace"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./extension.js"
+}

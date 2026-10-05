@@ -1,0 +1,9 @@
+# Type declarations generated per Claude Code build (`/plugin-types`)
+.claude/types/
+.claude-plugin/types/
+
+# VS Code extension package built by scripts/install-vscode-extension.sh
+*.vsix
+
+node_modules/
+.DS_Store
