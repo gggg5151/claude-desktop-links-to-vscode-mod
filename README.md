@@ -3,7 +3,7 @@
 A [Claude Code mod](https://code.claude.com/docs/en/plugins/mods/overview) for the desktop app.
 **Click a file reference in a reply, and the file opens in VS Code at that line.**
 
-<!-- TODO: demo GIF -->
+![A click on a file reference opens VS Code at that line](docs/demo.gif)
 
 In the desktop app's Code tab, a reply cites files as links such as `src/server.ts:42`. A click opens the app's own file pane, and an SSH session offers no "Open in" entry for your editor. With this mod, the click goes to the VS Code window you already have open.
 

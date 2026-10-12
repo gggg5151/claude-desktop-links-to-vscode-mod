@@ -3,7 +3,7 @@
 Claude デスクトップアプリ用の [Claude Code mod](https://code.claude.com/docs/en/plugins/mods/overview)。
 **回答にあるファイル参照を押すと、VS Code でそのファイルのその行が開く。**
 
-<!-- TODO: デモ GIF -->
+![ファイル参照を押すと VS Code の該当行が開く](docs/demo.gif)
 
 デスクトップアプリの Code タブでは、回答が `src/server.ts:42` のようなリンクでファイルを示す。押すとアプリ内のファイル表示が開くだけで、SSH セッションには自分のエディタへ渡す「Open in」も出ない。この mod を入れると、クリックが、いま開いている VS Code のウィンドウへ向かう。
 
