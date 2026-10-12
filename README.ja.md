@@ -19,31 +19,28 @@ Claude デスクトップアプリ用の [Claude Code mod](https://code.claude.c
 必要なものは、デスクトップアプリの Code タブ（Claude Code v2.1.287 以降）、VS Code 1.90 以降、`bash`。
 以下は、セッションが動くマシンで行う。SSH セッションならリモート側。
 
-1. ファイルを置く。
+1. プラグインを入れる。セッションの中で:
+
+   ```text
+   /plugin install open-in-vscode --marketplace gggg5151/claude-desktop-links-to-vscode-mod
+   ```
+
+   シェルからなら:
 
    ```bash
-   git clone https://github.com/gggg5151/claude-desktop-links-to-vscode-mod.git ~/.claude/mods/links-to-vscode
+   claude plugin marketplace add gggg5151/claude-desktop-links-to-vscode-mod
+   claude plugin install open-in-vscode@links-to-vscode
    ```
 
-2. mod を読み込ませる。`~/.claude/settings.json` に次を足す。
+2. 新しいセッションを始めて、ファイル参照を押す。
 
-   ```json
-   {
-     "env": {
-       "CLAUDE_CODE_PLUGIN_DIRS": "~/.claude/mods/links-to-vscode"
-     }
-   }
+3. Markdown プレビューの移動を使うなら、同梱の VS Code 拡張を入れる。VS Code のウィンドウを開いた状態で、セッションの中で:
+
+   ```text
+   /open-in-vscode-install-extension
    ```
 
-3. Markdown プレビューの移動を使うなら、VS Code のウィンドウを開いた状態で、同梱の VS Code 拡張を入れる。
-
-   ```bash
-   bash ~/.claude/mods/links-to-vscode/scripts/install-vscode-extension.sh
-   ```
-
-4. 新しいセッションを始めて、ファイル参照を押す。
-
-mod は利用者の権限で動く。`claude plugin validate ~/.claude/mods/links-to-vscode` を実行すると、この mod が何に割り込み、何を呼ぶかを、動かさずに一覧できる。
+インストールせずに clone を読み込ませる方法は [仕組み](docs/how-it-works.ja.md#clone-を読み込ませる) にある。mod は利用者の権限で動く。`claude plugin validate <フォルダ>` を実行すると、この mod が何に割り込み、何を呼ぶかを、動かさずに一覧できる。
 
 ## 既知の制約
 

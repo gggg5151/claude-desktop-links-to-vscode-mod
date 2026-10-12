@@ -99,9 +99,34 @@ const isOpenableFile = async ($: EngineInterface, path: string): Promise<boolean
   }
 }
 
+// The slash command that installs the bundled VS Code extension, so that the
+// person need not find this plugin's folder.
+const INSTALL_COMMAND = 'open-in-vscode-install-extension'
+
 export const register: Register = on => {
   // Whether each absolute path is a file to open, so any other link keeps its own behaviour.
   const openable = new Map<string, boolean>()
+
+  on('session.start', async ($, e, next) => {
+    await $.command.register({
+      name: INSTALL_COMMAND,
+      description: 'Install the Claude Open Bridge VS Code extension, for the Markdown Preview jump',
+    })
+    return next(e)
+  })
+
+  on('command.run', { command: INSTALL_COMMAND }, async $ => {
+    try {
+      const ran = await $.process.run(
+        ['bash', `${$.plugin.root}/scripts/install-vscode-extension.sh`],
+        { timeoutMs: 120000 },
+      )
+      const output = `${ran.stdout}\n${ran.stderr}`.trim()
+      return { text: ran.exitCode === 0 ? output : `${output}\n(exit ${ran.exitCode})` }
+    } catch (error) {
+      return { text: `Could not run the install script: ${String(error)}` }
+    }
+  })
 
   on('ui.render', { component: 'AssistantMessage' }, async ($, e, next) => {
     if (e.surface !== 'desktop' || !e.props.text.includes('](')) return next(e)

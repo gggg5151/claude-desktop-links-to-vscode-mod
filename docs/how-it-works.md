@@ -44,11 +44,31 @@ If the jump does not work right after installing the extension, run **Developer:
 `claude plugin validate` lists what the mod hooks and calls, without running anything:
 
 ```
-❯ ./register.tsx hooks: ui.render{component=AssistantMessage}
-❯ ./register.tsx calls: $.fs.stat, $.process.run, $.session.cwd, $.ui.resolve, $.ui.toast
+❯ ./register.tsx hooks: session.start, command.run{command=open-in-vscode-install-extension}, ui.render{component=AssistantMessage}
+❯ ./register.tsx calls: $.command.register, $.fs.stat, $.process.run, $.session.cwd, $.ui.resolve, $.ui.toast
 ```
 
-It checks whether a linked path is a file (`$.fs.stat`), and on a click runs `scripts/open-in-vscode.sh` (`$.process.run`). It makes no network requests.
+It checks whether a linked path is a file (`$.fs.stat`), on a click runs `scripts/open-in-vscode.sh`, and on `/open-in-vscode-install-extension` runs `scripts/install-vscode-extension.sh` (`$.process.run`). It makes no network requests.
+
+## Load from a clone
+
+Instead of installing from the marketplace, you can point Claude Code at a clone:
+
+```bash
+git clone https://github.com/gggg5151/claude-desktop-links-to-vscode-mod.git ~/.claude/mods/links-to-vscode
+```
+
+Then add the folder to `~/.claude/settings.json`:
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_PLUGIN_DIRS": "~/.claude/mods/links-to-vscode"
+  }
+}
+```
+
+If the variable is already set, append the folder with `:`. In a terminal session, `claude --plugin-dir ~/.claude/mods/links-to-vscode` loads it for that session only. Do not install the plugin and load the clone at the same time: two plugins with one name, and only the first loads.
 
 ## Check the setup without opening anything
 
@@ -92,6 +112,6 @@ Installing the extension
 
 ## Uninstall
 
-1. Remove the folder from `CLAUDE_CODE_PLUGIN_DIRS` in `~/.claude/settings.json`.
-2. Delete the cloned folder and `~/.cache/claude-open-bridge`.
+1. Installed from the marketplace: `claude plugin uninstall open-in-vscode@links-to-vscode`. Loaded from a clone: remove the folder from `CLAUDE_CODE_PLUGIN_DIRS` in `~/.claude/settings.json` and delete it.
+2. Delete `~/.cache/claude-open-bridge`.
 3. In VS Code, uninstall **Claude Open Bridge** from the Extensions view.

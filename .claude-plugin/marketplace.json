@@ -1,0 +1,16 @@
+{
+  "name": "links-to-vscode",
+  "description": "A Claude Code mod for the desktop app: click a file reference in a reply and it opens in VS Code at that line.",
+  "owner": {
+    "name": "gggg5151",
+    "url": "https://github.com/gggg5151"
+  },
+  "plugins": [
+    {
+      "name": "open-in-vscode",
+      "source": ".",
+      "category": "editor",
+      "tags": ["vscode", "remote-ssh", "desktop", "markdown-preview"]
+    }
+  ]
+}

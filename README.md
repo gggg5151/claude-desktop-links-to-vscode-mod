@@ -19,31 +19,28 @@ In the desktop app's Code tab, a reply cites files as links such as `src/server.
 You need the desktop app's Code tab with Claude Code v2.1.287 or later, VS Code 1.90 or later, and `bash`.
 Run these on the machine where the session runs. For an SSH session, that is the remote host.
 
-1. Get the files.
+1. Install the plugin. In a session:
+
+   ```text
+   /plugin install open-in-vscode --marketplace gggg5151/claude-desktop-links-to-vscode-mod
+   ```
+
+   Or in your shell:
 
    ```bash
-   git clone https://github.com/gggg5151/claude-desktop-links-to-vscode-mod.git ~/.claude/mods/links-to-vscode
+   claude plugin marketplace add gggg5151/claude-desktop-links-to-vscode-mod
+   claude plugin install open-in-vscode@links-to-vscode
    ```
 
-2. Load the mod. Add this to `~/.claude/settings.json`:
+2. Start a new session and click a file reference.
 
-   ```json
-   {
-     "env": {
-       "CLAUDE_CODE_PLUGIN_DIRS": "~/.claude/mods/links-to-vscode"
-     }
-   }
+3. For the Markdown Preview jump, install the bundled VS Code extension. In a session, while a VS Code window is open:
+
+   ```text
+   /open-in-vscode-install-extension
    ```
 
-3. For the Markdown Preview jump, install the bundled VS Code extension while a VS Code window is open:
-
-   ```bash
-   bash ~/.claude/mods/links-to-vscode/scripts/install-vscode-extension.sh
-   ```
-
-4. Start a new session and click a file reference.
-
-A mod runs with your permissions. `claude plugin validate ~/.claude/mods/links-to-vscode` lists what this one hooks and calls, without running it.
+To load a clone instead of installing, see [How it works](docs/how-it-works.md#load-from-a-clone). A mod runs with your permissions; `claude plugin validate <folder>` lists what this one hooks and calls, without running it.
 
 ## Known limitations
 

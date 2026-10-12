@@ -44,11 +44,31 @@ Markdown を担当する。標準のプレビューは外から行を指定で�
 `claude plugin validate` は、mod が何に割り込み、何を呼ぶかを、何も実行せずに一覧する。
 
 ```
-❯ ./register.tsx hooks: ui.render{component=AssistantMessage}
-❯ ./register.tsx calls: $.fs.stat, $.process.run, $.session.cwd, $.ui.resolve, $.ui.toast
+❯ ./register.tsx hooks: session.start, command.run{command=open-in-vscode-install-extension}, ui.render{component=AssistantMessage}
+❯ ./register.tsx calls: $.command.register, $.fs.stat, $.process.run, $.session.cwd, $.ui.resolve, $.ui.toast
 ```
 
-リンク先がファイルかどうかを調べ（`$.fs.stat`）、クリックされたら `scripts/open-in-vscode.sh` を実行する（`$.process.run`）。ネットワークへのリクエストは行わない。
+リンク先がファイルかどうかを調べ（`$.fs.stat`）、クリックされたら `scripts/open-in-vscode.sh` を、`/open-in-vscode-install-extension` が打たれたら `scripts/install-vscode-extension.sh` を実行する（`$.process.run`）。ネットワークへのリクエストは行わない。
+
+## clone を読み込ませる
+
+marketplace から入れる代わりに、clone したフォルダを Claude Code に読み込ませることもできる。
+
+```bash
+git clone https://github.com/gggg5151/claude-desktop-links-to-vscode-mod.git ~/.claude/mods/links-to-vscode
+```
+
+そのフォルダを `~/.claude/settings.json` に書く。
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_PLUGIN_DIRS": "~/.claude/mods/links-to-vscode"
+  }
+}
+```
+
+この変数がすでにある場合は、`:` で区切って追記する。ターミナルのセッションなら `claude --plugin-dir ~/.claude/mods/links-to-vscode` で、そのセッションだけ読み込める。プラグインのインストールと clone の読み込みを同時にしないこと。同名のプラグインが2つになり、先に読み込まれたほうしか動かない。
 
 ## 何も開かずに設定を確かめる
 
@@ -92,6 +112,6 @@ Markdown プレビュー
 
 ## アンインストール
 
-1. `~/.claude/settings.json` の `CLAUDE_CODE_PLUGIN_DIRS` から、このフォルダを外す。
-2. clone したフォルダと `~/.cache/claude-open-bridge` を削除する。
+1. marketplace から入れた場合は `claude plugin uninstall open-in-vscode@links-to-vscode`。clone を読み込ませた場合は、`~/.claude/settings.json` の `CLAUDE_CODE_PLUGIN_DIRS` からフォルダを外して削除する。
+2. `~/.cache/claude-open-bridge` を削除する。
 3. VS Code の拡張機能ビューで **Claude Open Bridge** をアンインストールする。
